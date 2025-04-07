@@ -170,6 +170,8 @@ export class ImageOptimizationStack extends Stack {
     // Create a CloudFront origin: S3 with fallback to Lambda when image needs to be transformed, otherwise with Lambda as sole origin
     var imageOrigin;
 
+    // if image is not in the bucket for transformed images, it is processed by Lambda and stored in the bucket
+    // if image is in the bucket for transformed images, it is served from there
     if (transformedImageBucket) {
       imageOrigin = new origins.OriginGroup({
         primaryOrigin: new origins.S3Origin(transformedImageBucket, {
